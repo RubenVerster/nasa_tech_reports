@@ -4,6 +4,8 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
     Droid Sans, Helvetica Neue, sans-serif;
+  background-image: url('../public/resources/img/stars.jpg');
+  color: aliceblue;
 }
 
 a {
@@ -22,5 +24,27 @@ a {
   body {
     color: white;
     background: black;
+  }
+}
+
+.searchmatch {
+  color: white;
+  padding: 0 2px;
+  text-shadow: 0 0 5px white;
+  text-decoration: underline;
+
+  //add animation for text colot
+  animation: color-change 3s infinite;
+}
+
+@keyframes color-change {
+  0% {
+    color: white;
+  }
+  50% {
+    color: pink;
+  }
+  100% {
+    color: white;
   }
 }
