@@ -5,7 +5,7 @@ import React from 'react';
 import type { RootState } from '../store';
 import { useSelector, useDispatch } from 'react-redux';
 import { decrement, increment } from '../store/home';
-import Form from '../components/Form';
+import Controls from '../components/Controls';
 import Footer from '../components/Footer';
 
 const Home: NextPage = () => {
@@ -24,8 +24,8 @@ const Home: NextPage = () => {
         <h1>Wiki-Replace</h1>
 
         <div>
-          <Form />
-          <div>
+          <Controls />
+          {/* <div>
             <button aria-label='Increment value' onClick={() => dispatch(increment())}>
               Increment
             </button>
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
             <button aria-label='Decrement value' onClick={() => dispatch(decrement())}>
               Decrement
             </button>
-          </div>
+          </div> */}
         </div>
       </main>
       <Footer />
