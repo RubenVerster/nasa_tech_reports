@@ -25,15 +25,13 @@ a {
     color: white;
     background: black;
   }
-}
+} 
 
 .searchmatch {
   color: white;
   padding: 0 2px;
   text-shadow: 0 0 5px white;
   text-decoration: underline;
-
-  //add animation for text colot
   animation: color-change 3s infinite;
 }
 
@@ -47,4 +45,8 @@ a {
   100% {
     color: white;
   }
+}
+
+.result {
+  padding: 10px;
 }

@@ -6,6 +6,7 @@ import type { RootState } from '../store';
 import { useSelector, useDispatch } from 'react-redux';
 import { decrement, increment } from '../store/home';
 import Form from '../components/Form';
+import Footer from '../components/Footer';
 
 const Home: NextPage = () => {
   const count = useSelector((state: RootState) => state.counter.value);
@@ -14,13 +15,13 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Boilerplate</title>
+        <title>Wiki-Replace</title>
         <meta name='description' content='A boilerplate app' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
       <main>
-        <h1>Boilerplate App</h1>
+        <h1>Wiki-Replace</h1>
 
         <div>
           <Form />
@@ -35,12 +36,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-
-      <footer>
-        <a href='https://rubenverster.com' target='_blank' rel='noopener noreferrer'>
-          &copy; Ruben Verster
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 };

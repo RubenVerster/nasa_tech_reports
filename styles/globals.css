@@ -38,6 +38,9 @@ a {
   100% {
     color: white; } }
 
+.result {
+  padding: 10px; }
+
 .container {
   padding: 0 2rem; }
 

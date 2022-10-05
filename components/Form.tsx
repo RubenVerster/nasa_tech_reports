@@ -8,7 +8,6 @@ const Form: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      //   const response = await fetch(URL, { mode: 'no-cors' });
       const response = await axios.get(URL);
       console.log(response.data);
       setData(response.data.query.search);
@@ -24,7 +23,7 @@ const Form: React.FC = () => {
   return (
     <div>
       {data.map((item: any) => (
-        <div key={item.pageid}>
+        <div className='result' key={item.pageid}>
           <h3>{item.title}</h3>
 
           <div dangerouslySetInnerHTML={{ __html: item.snippet }}></div>
