@@ -1,30 +1,22 @@
 import { useState } from 'react';
-import { ISearchResultList, ISearchResult } from '../types/index';
+import { ISearchResult } from '../types/index';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
 
 const SearchResults: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<ISearchResult[]>([]);
-  const [error, setError] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const searchResults = useSelector((state: RootState) => state.search.searchResults);
 
   return (
     <div>
-      {/* <div>
-            <button aria-label='Increment value' onClick={() => dispatch(increment())}>
-              Increment
-            </button>
-            <span>{count}</span>
-            <button aria-label='Decrement value' onClick={() => dispatch(decrement())}>
-              Decrement
-            </button>
-          </div> */}
       <div>
-        {searchResults.map((item: ISearchResult) => (
-          <div className='result' key={item.pageid}>
-            <h3>{item.title}</h3>
-            <div dangerouslySetInnerHTML={{ __html: item.snippet }}></div>
-          </div>
-        ))}
+        {searchResults?.length > 0
+          ? searchResults?.map((item: ISearchResult) => (
+              <div className='result' key={item.pageid}>
+                <h3>{item.title}</h3>
+                <div dangerouslySetInnerHTML={{ __html: item.snippet }}></div>
+              </div>
+            ))
+          : 'No results'}
       </div>
     </div>
   );
