@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { ISearchResult, ISearchResultList } from '../../types';
+import { ISearchResult } from '../../types';
 
 export interface SearchState {
   searchResults: ISearchResult[];

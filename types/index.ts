@@ -9,7 +9,3 @@ export interface ISearchResult {
 }
 
 export type totalhits = number;
-
-export interface ISearchResultList {
-  searchResults: ISearchResult[];
-}
