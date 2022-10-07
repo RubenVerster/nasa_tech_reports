@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { ISearchResult, ISearchResultList } from '../../types';
 
 export interface SearchState {
-  searchResults: ISearchResultList | null | never[];
+  searchResults: ISearchResult[];
 }
 
 const initialState: SearchState = {
@@ -27,7 +27,7 @@ export const searchSlice = createSlice({
     // incrementByAmount: (state, action: PayloadAction<number>) => {
     //   state.value += action.payload;
     // },
-    setResults: (state, action: PayloadAction<ISearchResultList>) => {
+    setResults: (state, action: PayloadAction<ISearchResult[]>) => {
       state.searchResults = action.payload;
     },
   },
