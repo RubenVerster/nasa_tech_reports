@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ISearchResult } from '../types/index';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
