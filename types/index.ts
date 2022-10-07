@@ -9,3 +9,8 @@ export interface ISearchResult {
 }
 
 export type totalhits = number;
+
+export enum EReplaceType {
+  single = 'single',
+  all = 'all',
+}

@@ -4,10 +4,12 @@ import { ISearchResult } from '../../types';
 
 export interface SearchState {
   searchResults: ISearchResult[];
+  replaceResults: ISearchResult[];
 }
 
 const initialState: SearchState = {
   searchResults: [],
+  replaceResults: [],
 };
 
 export const searchSlice = createSlice({
@@ -28,6 +30,9 @@ export const searchSlice = createSlice({
     //   state.value += action.payload;
     // },
     setResults: (state, action: PayloadAction<ISearchResult[]>) => {
+      state.searchResults = action.payload;
+    },
+    setReplaceData: (state, action: PayloadAction<ISearchResult[]>) => {
       state.searchResults = action.payload;
     },
   },
