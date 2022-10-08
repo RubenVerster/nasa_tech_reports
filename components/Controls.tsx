@@ -50,7 +50,10 @@ const Controls = () => {
         const newResults = searchResults.map((result) => {
           return {
             ...result,
-            snippet: result.snippet.toLowerCase().replaceAll(searchTerm, replaceSearchTerm),
+            snippet: result.snippet
+              .toLowerCase()
+              .replace(/(<([^>]+)>)/gi, '')
+              .replace(searchTerm, `<span class=\"searchmatch\">${replaceSearchTerm}</span>`),
           };
         });
         dispatch(setReplaceResults(newResults));
