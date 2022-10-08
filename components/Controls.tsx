@@ -32,13 +32,17 @@ const Controls = () => {
     switch (replaceType) {
       //you can rather have one utility unction that replaces the text and then in the reaplce all, call that replace function on every element and in the single replace, only do it on the first element
       //use .replace on the first elelemt and replaceAll on all of them
+      //can have case sensitive and case insensitive replacements
       case EReplaceType.single:
         let firstResult = searchResults[0];
         let searchResultsCopy = searchResults.slice(1);
 
         firstResult = {
           ...firstResult,
-          snippet: firstResult.snippet.toLowerCase().replace(searchTerm, replaceSearchTerm),
+          snippet: firstResult.snippet
+            .toLowerCase()
+            .replace(/(<([^>]+)>)/gi, '')
+            .replace(searchTerm, `<span class=\"searchmatch\">${replaceSearchTerm}</span>`),
         };
         dispatch(setReplaceResults([firstResult, ...searchResultsCopy]));
         break;
