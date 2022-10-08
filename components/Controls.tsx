@@ -1,21 +1,19 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 // import debounce from 'lodash/debounce';
-import { EReplaceType, ISearchResult } from '../types/index';
+import { EReplaceType } from '../types/index';
 import { useSelector, useDispatch } from 'react-redux';
-import { setResults } from '../store/home';
+import { setGenesisResults, setReplaceResults } from '../store/search';
 import { RootState } from '../store';
 
 const Controls = () => {
   const dispatch = useDispatch();
 
-  const searchResults = useSelector((state: RootState) => state.search.searchResults);
-  const [searchTerm, setSearchTerm] = useState<string>('quantum immortality');
+  const searchResults = useSelector((state: RootState) => state.search.replaceResults);
+  const [searchTerm, setSearchTerm] = useState<string>('quantum');
   const [replaceSearchTerm, setReplaceSearchTerm] = useState<string>('');
 
-  const [error, setError] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const URL = `https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&format=json&srsearch=%22${searchTerm}%22&srlimit=10`;
+  const URL = `https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&format=json&srsearch=${searchTerm}&srlimit=10`;
 
   const searchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -30,26 +28,43 @@ const Controls = () => {
     fetchData();
   };
 
-  const replace = (replaceType: EReplaceType) => {
-    const newSearchResults = searchResults?.map((item: ISearchResult) => {
-      const newTitle = item.title.replace(searchTerm, replaceSearchTerm);
-      const newSnippet = item.snippet.replace(searchTerm, replaceSearchTerm);
-      return { ...item, title: newTitle, snippet: newSnippet };
-    });
-    dispatch(setResults(newSearchResults));
+  const replaceText = (replaceType: EReplaceType) => {
+    switch (replaceType) {
+      //you can rather have one utility unction that replaces the text and then in the reaplce all, call that replace function on every element and in the single replace, only do it on the first element
+      //use .replace on the first elelemt and replaceAll on all of them
+      case EReplaceType.single:
+        let firstResult = searchResults[0];
+        let searchResultsCopy = searchResults.slice(1);
+
+        firstResult = {
+          ...firstResult,
+          snippet: firstResult.snippet.toLowerCase().replace(searchTerm, replaceSearchTerm),
+        };
+        dispatch(setReplaceResults([firstResult, ...searchResultsCopy]));
+        break;
+      case EReplaceType.all:
+        const newResults = searchResults.map((result) => {
+          return {
+            ...result,
+            snippet: result.snippet.toLowerCase().replaceAll(searchTerm, replaceSearchTerm),
+          };
+        });
+        dispatch(setReplaceResults(newResults));
+        break;
+      default:
+        break;
+    }
   };
 
   const fetchData = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(URL);
-      console.log(response.data);
-      dispatch(setResults(response.data.query.search));
+      console.log('%c [response]', 'color: pink', response.data.query.search);
+      dispatch(setGenesisResults(response.data.query.search));
+      dispatch(setReplaceResults(response.data.query.search));
     } catch (error) {
       console.log(error);
-      setError('Failed to load data');
     }
-    setLoading(false);
   };
 
   return (
@@ -59,8 +74,8 @@ const Controls = () => {
         <button type='submit'>Search</button>
       </form>
       <input type='text' value={replaceSearchTerm} onChange={(e) => handleReplaceInputChange(e)}></input>
-      <button onClick={() => replace(EReplaceType.single)}>Replace First</button>
-      <button onClick={() => replace(EReplaceType.all)}>Replace All</button>
+      <button onClick={() => replaceText(EReplaceType.single)}>Replace First</button>
+      <button onClick={() => replaceText(EReplaceType.all)}>Replace All</button>
     </div>
   );
 };
