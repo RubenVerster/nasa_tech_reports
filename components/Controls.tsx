@@ -10,7 +10,9 @@ import ResponseCache from 'next/dist/server/response-cache';
 const Controls = () => {
   const dispatch = useDispatch();
 
-  const searchResults = useSelector((state: RootState) => state.search.replaceResults);
+  const genesisResults = useSelector((state: RootState) => state.search.genesisResults);
+
+  let searchResults = useSelector((state: RootState) => state.search.replaceResults);
   const [searchTerm, setSearchTerm] = useState<string>('quantum');
   const [replaceSearchTerm, setReplaceSearchTerm] = useState<string>('');
 
@@ -30,6 +32,7 @@ const Controls = () => {
   };
 
   const replaceText = (replaceType: EReplaceType) => {
+    searchResults = genesisResults;
     switch (replaceType) {
       //you can rather have one utility unction that replaces the text and then in the reaplce all, call that replace function on every element and in the single replace, only do it on the first element
       //use .replace on the first elelemt and replaceAll on all of them
