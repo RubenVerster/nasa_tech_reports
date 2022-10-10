@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 // import debounce from 'lodash/debounce';
-import { EReplaceType } from '../types/index';
+import { EReplaceType, ISearchResult } from '../types/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { setGenesisResults, setReplaceResults } from '../store/search';
 import { RootState } from '../store';
+import ResponseCache from 'next/dist/server/response-cache';
 
 const Controls = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const Controls = () => {
           ...firstResult,
           snippet: firstResult.snippet
             .toLowerCase()
-            .replace(/(<([^>]+)>)/gi, '')
+            .replaceAll(/(<([^>]+)>)/gi, '')
             .replace(searchTerm, `<span class=\"searchmatch\">${replaceSearchTerm}</span>`),
         };
         dispatch(setReplaceResults([firstResult, ...searchResultsCopy]));
@@ -52,8 +53,8 @@ const Controls = () => {
             ...result,
             snippet: result.snippet
               .toLowerCase()
-              .replace(/(<([^>]+)>)/gi, '')
-              .replace(searchTerm, `<span class=\"searchmatch\">${replaceSearchTerm}</span>`),
+              .replaceAll(/(<([^>]+)>)/gi, '')
+              .replaceAll(searchTerm, `<span class=\"searchmatch\">${replaceSearchTerm}</span>`),
           };
         });
         dispatch(setReplaceResults(newResults));
@@ -63,12 +64,34 @@ const Controls = () => {
     }
   };
 
+  // const matchLowerOrUpper = (text: string) => {
+  //   const firstLetter = text.charAt(0);
+  //   const isUpperCase = firstLetter === firstLetter.toUpperCase();
+  //   if (isUpperCase) {
+  //     return text.replace(searchTerm, replaceSearchTerm.charAt(0).toUpperCase() + replaceSearchTerm.slice(1));
+  //   } else {
+  //     return text.replace(searchTerm, replaceSearchTerm);
+  //   }
+  // };
+
   const fetchData = async () => {
     try {
       const response = await axios.get(URL);
       console.log('%c [response]', 'color: pink', response.data.query.search);
-      dispatch(setGenesisResults(response.data.query.search));
-      dispatch(setReplaceResults(response.data.query.search));
+
+      let exactMatch = response.data.query.search.map((result: ISearchResult) => {
+        return {
+          ...result,
+          snippet: `${result.snippet
+            // implement logic to conditionally replace a lowercase or uppercase search term
+            .toLowerCase()
+            .replaceAll(/(<([^>]+)>)/gi, '')
+            .replaceAll(searchTerm, `<span class=\"searchmatch\">${searchTerm}</span>`)}`,
+        };
+      });
+
+      dispatch(setGenesisResults(exactMatch));
+      dispatch(setReplaceResults(exactMatch));
     } catch (error) {
       console.log(error);
     }
