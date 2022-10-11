@@ -44,6 +44,7 @@ const Controls = () => {
     fetchData();
   };
 
+  //reafctor into utility file
   const replaceText = (replaceType: EReplaceType) => {
     if (genesisResults.length === 0) return;
     searchResults = genesisResults;
@@ -90,11 +91,11 @@ const Controls = () => {
 
   const debouncedSearch = debounce(async () => {
     await fetchData();
-  }, 777);
+  }, 333);
 
   const debouncedSetSerchTerm = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-  }, 777);
+  }, 333);
 
   // const matchLowerOrUpper = (text: string) => {
   //   const firstLetter = text.charAt(0);
@@ -107,6 +108,7 @@ const Controls = () => {
   // };
 
   const fetchData = async () => {
+    console.log(`%c [I DID A SEARCH]`, `color: blue`);
     //Easter Egg 😝
     if (searchTerm.toLowerCase() === 'hello there') alert('General Kenobi!');
     setLoading(true);
@@ -136,12 +138,15 @@ const Controls = () => {
 
   return (
     <div style={{ color: 'green ' }}>
-      <form onSubmit={(e) => handleSearch(e)}>
-        <input type='text' onChange={(e) => debouncedSetSerchTerm(e)}></input>
-        <button type='submit' disabled={loading}>
-          Search
-        </button>
-      </form>
+      <input
+        type='text'
+        onChange={(e) => {
+          debouncedSetSerchTerm(e);
+        }}
+      ></input>
+      <button onClick={(e) => handleSearch(e)} type='submit' disabled={loading}>
+        Search
+      </button>
       <input type='text' value={replaceSearchTerm} onChange={(e) => handleReplaceInputChange(e)}></input>
       <button onClick={() => replaceText(EReplaceType.single)}>Replace First</button>
       <button onClick={() => replaceText(EReplaceType.all)}>Replace All</button>
