@@ -131,9 +131,10 @@ const Controls = () => {
   };
 
   return (
-    <div style={{ color: 'green ' }}>
+    <div className='p-2' style={{ color: 'green ' }}>
       <input
         type='text'
+        placeholder='Enter a search term'
         onChange={(e) => {
           debouncedSetSerchTerm(e);
         }}
@@ -142,7 +143,12 @@ const Controls = () => {
         <VscSearch />
         Search
       </button>
-      <input type='text' value={replaceSearchTerm} onChange={(e) => handleReplaceInputChange(e)}></input>
+      <input
+        placeholder='Enter a replacement term'
+        type='text'
+        value={replaceSearchTerm}
+        onChange={(e) => handleReplaceInputChange(e)}
+      ></input>
       <button onClick={() => replaceText(EReplaceType.single)}>
         <VscReplace />
         Replace First
