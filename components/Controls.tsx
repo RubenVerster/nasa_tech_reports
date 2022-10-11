@@ -1,11 +1,11 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import debounce from 'lodash/debounce';
 import { EReplaceType, ISearchResult } from '../types/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { setGenesisResults, setReplaceResults } from '../store/search';
 import { RootState } from '../store';
-import ResponseCache from 'next/dist/server/response-cache';
+import debounce from 'lodash/debounce';
 
 const Controls = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const Controls = () => {
   const genesisResults = useSelector((state: RootState) => state.search.genesisResults);
 
   let searchResults = useSelector((state: RootState) => state.search.replaceResults);
-  const [searchTerm, setSearchTerm] = useState<string>('quantum');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [replaceSearchTerm, setReplaceSearchTerm] = useState<string>('');
 
   const URL = `https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&format=json&srsearch=${searchTerm}&srlimit=10`;
@@ -67,6 +67,17 @@ const Controls = () => {
     }
   };
 
+  useEffect(() => {
+    if (searchTerm.length <= 0) return;
+    fetchData();
+  }, [searchTerm]);
+
+  const debouncedSearchInputChange = debounce(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    //Easter Egg 😝
+    if (e.target.value.toLowerCase() === 'hello there') alert('General Kenobi!');
+    await searchInputChange(e);
+  }, 777);
+
   // const matchLowerOrUpper = (text: string) => {
   //   const firstLetter = text.charAt(0);
   //   const isUpperCase = firstLetter === firstLetter.toUpperCase();
@@ -103,7 +114,7 @@ const Controls = () => {
   return (
     <div style={{ color: 'green ' }}>
       <form onSubmit={(e) => handleSearch(e)}>
-        <input value={searchTerm} type='text' onChange={(e) => searchInputChange(e)}></input>
+        <input type='text' onChange={(e) => debouncedSearchInputChange(e)}></input>
         <button type='submit'>Search</button>
       </form>
       <input type='text' value={replaceSearchTerm} onChange={(e) => handleReplaceInputChange(e)}></input>
