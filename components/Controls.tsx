@@ -21,10 +21,6 @@ const Controls = () => {
 
   const URL = `https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&format=json&srsearch=${searchTerm}&srlimit=10`;
 
-  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
   const handleReplaceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReplaceSearchTerm(e.target.value);
   };
@@ -96,6 +92,10 @@ const Controls = () => {
     await fetchData();
   }, 777);
 
+  const debouncedSetSerchTerm = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, 777);
+
   // const matchLowerOrUpper = (text: string) => {
   //   const firstLetter = text.charAt(0);
   //   const isUpperCase = firstLetter === firstLetter.toUpperCase();
@@ -137,7 +137,7 @@ const Controls = () => {
   return (
     <div style={{ color: 'green ' }}>
       <form onSubmit={(e) => handleSearch(e)}>
-        <input type='text' onChange={(e) => handleSearchTermChange(e)}></input>
+        <input type='text' onChange={(e) => debouncedSetSerchTerm(e)}></input>
         <button type='submit' disabled={loading}>
           Search
         </button>
