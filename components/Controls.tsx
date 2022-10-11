@@ -32,6 +32,7 @@ const Controls = () => {
   };
 
   const replaceText = (replaceType: EReplaceType) => {
+    if (genesisResults.length === 0) return;
     searchResults = genesisResults;
     switch (replaceType) {
       //you can rather have one utility unction that replaces the text and then in the reaplce all, call that replace function on every element and in the single replace, only do it on the first element
