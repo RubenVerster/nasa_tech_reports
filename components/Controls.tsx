@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setGenesisResults, setReplaceResults } from '../store/search';
 import { RootState } from '../store';
 import debounce from 'lodash/debounce';
+import { MoonLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 
 const Controls = () => {
   const dispatch = useDispatch();
@@ -15,10 +17,11 @@ const Controls = () => {
   let searchResults = useSelector((state: RootState) => state.search.replaceResults);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [replaceSearchTerm, setReplaceSearchTerm] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const URL = `https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&format=json&srsearch=${searchTerm}&srlimit=10`;
 
-  const searchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
@@ -28,6 +31,20 @@ const Controls = () => {
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (searchTerm.length <= 3) {
+      toast.error('Search term must be longer than 3 letters', {
+        position: 'bottom-right',
+        autoClose: 4444,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+      return;
+    }
     fetchData();
   };
 
@@ -69,14 +86,14 @@ const Controls = () => {
   };
 
   useEffect(() => {
-    if (searchTerm.length <= 0) return;
-    fetchData();
+    if (searchTerm.length <= 3) {
+      return;
+    }
+    debouncedSearch();
   }, [searchTerm]);
 
-  const debouncedSearchInputChange = debounce(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    //Easter Egg 😝
-    if (e.target.value.toLowerCase() === 'hello there') alert('General Kenobi!');
-    await searchInputChange(e);
+  const debouncedSearch = debounce(async () => {
+    await fetchData();
   }, 777);
 
   // const matchLowerOrUpper = (text: string) => {
@@ -90,6 +107,10 @@ const Controls = () => {
   // };
 
   const fetchData = async () => {
+    //Easter Egg 😝
+    if (searchTerm.toLowerCase() === 'hello there') alert('General Kenobi!');
+    setLoading(true);
+
     try {
       const response = await axios.get(URL);
       console.log('%c [response]', 'color: pink', response.data.query.search);
@@ -110,17 +131,21 @@ const Controls = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (
     <div style={{ color: 'green ' }}>
       <form onSubmit={(e) => handleSearch(e)}>
-        <input type='text' onChange={(e) => debouncedSearchInputChange(e)}></input>
-        <button type='submit'>Search</button>
+        <input type='text' onChange={(e) => handleSearchTermChange(e)}></input>
+        <button type='submit' disabled={loading}>
+          Search
+        </button>
       </form>
       <input type='text' value={replaceSearchTerm} onChange={(e) => handleReplaceInputChange(e)}></input>
       <button onClick={() => replaceText(EReplaceType.single)}>Replace First</button>
       <button onClick={() => replaceText(EReplaceType.all)}>Replace All</button>
+      {loading && <MoonLoader color={'#fff'} loading={loading} size={42} />}
     </div>
   );
 };
