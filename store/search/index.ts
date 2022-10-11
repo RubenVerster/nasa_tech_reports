@@ -7,6 +7,7 @@ export interface SearchState {
   replaceResults: ISearchResult[];
   loading: boolean;
   error: boolean | null;
+  firstSearch: boolean;
 }
 
 const initialState: SearchState = {
@@ -14,6 +15,7 @@ const initialState: SearchState = {
   replaceResults: [],
   loading: false,
   error: null,
+  firstSearch: true,
 };
 
 export const searchSlice = createSlice({
@@ -32,10 +34,13 @@ export const searchSlice = createSlice({
     setError: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+    setFirstSearch: (state, action: PayloadAction<boolean>) => {
+      state.firstSearch = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setGenesisResults, setReplaceResults } = searchSlice.actions;
+export const { setGenesisResults, setReplaceResults, setLoading, setFirstSearch } = searchSlice.actions;
 
 export default searchSlice.reducer;

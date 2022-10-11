@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // import debounce from 'lodash/debounce';
 import { EReplaceType, ISearchResult } from '../types/index';
 import { useSelector, useDispatch } from 'react-redux';
-import { setGenesisResults, setReplaceResults } from '../store/search';
+import { setGenesisResults, setReplaceResults, setLoading, setFirstSearch } from '../store/search';
 import { RootState } from '../store';
 import debounce from 'lodash/debounce';
 import { MoonLoader } from 'react-spinners';
@@ -15,9 +15,9 @@ const Controls = () => {
   const genesisResults = useSelector((state: RootState) => state.search.genesisResults);
 
   let searchResults = useSelector((state: RootState) => state.search.replaceResults);
+  const loading = useSelector((state: RootState) => state.search.loading);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [replaceSearchTerm, setReplaceSearchTerm] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
 
   const URL = `https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&format=json&srsearch=${searchTerm}&srlimit=10`;
 
@@ -27,7 +27,19 @@ const Controls = () => {
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    if (searchTerm.length === 0) {
+      toast.error('Please enter a search term', {
+        position: 'bottom-right',
+        autoClose: 4444,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+      return;
+    }
     if (searchTerm.length <= 3) {
       toast.error('Search term must be longer than 3 letters', {
         position: 'bottom-right',
@@ -111,8 +123,8 @@ const Controls = () => {
     console.log(`%c [I DID A SEARCH]`, `color: blue`);
     //Easter Egg 😝
     if (searchTerm.toLowerCase() === 'hello there') alert('General Kenobi!');
-    setLoading(true);
-
+    dispatch(setLoading(true));
+    dispatch(setFirstSearch(false));
     try {
       const response = await axios.get(URL);
       console.log('%c [response]', 'color: pink', response.data.query.search);
@@ -133,7 +145,7 @@ const Controls = () => {
     } catch (error) {
       console.log(error);
     }
-    setLoading(false);
+    dispatch(setLoading(false));
   };
 
   return (
@@ -150,7 +162,6 @@ const Controls = () => {
       <input type='text' value={replaceSearchTerm} onChange={(e) => handleReplaceInputChange(e)}></input>
       <button onClick={() => replaceText(EReplaceType.single)}>Replace First</button>
       <button onClick={() => replaceText(EReplaceType.all)}>Replace All</button>
-      {loading && <MoonLoader color={'#fff'} loading={loading} size={42} />}
     </div>
   );
 };
