@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setGenesisResults, setReplaceResults, setLoading, setFirstSearch } from '../store/search';
 import { RootState } from '../store';
 import debounce from 'lodash/debounce';
-import { MoonLoader } from 'react-spinners';
+import { VscReplace, VscReplaceAll, VscSearch } from 'react-icons/vsc';
 import { toast } from 'react-toastify';
 
 const Controls = () => {
@@ -139,11 +139,18 @@ const Controls = () => {
         }}
       ></input>
       <button onClick={(e) => handleSearch(e)} type='submit' disabled={loading}>
+        <VscSearch />
         Search
       </button>
       <input type='text' value={replaceSearchTerm} onChange={(e) => handleReplaceInputChange(e)}></input>
-      <button onClick={() => replaceText(EReplaceType.single)}>Replace First</button>
-      <button onClick={() => replaceText(EReplaceType.all)}>Replace All</button>
+      <button onClick={() => replaceText(EReplaceType.single)}>
+        <VscReplace />
+        Replace First
+      </button>
+      <button onClick={() => replaceText(EReplaceType.all)}>
+        <VscReplaceAll />
+        Replace All
+      </button>
     </div>
   );
 };

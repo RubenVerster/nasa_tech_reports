@@ -15,28 +15,26 @@ const Home: NextPage = () => {
     <div>
       <Head>
         <title>Wiki-Replace</title>
-        <meta name='description' content='A boilerplate app' />
+        <meta name='description' content='Search Wikipedia For Knowledge' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
       <main>
         <h1>Wiki-Replace</h1>
 
-        <div>
-          <ToastContainer
-            position={'bottom-right'}
-            autoClose={4444}
-            hideProgressBar={true}
-            closeOnClick={true}
-            pauseOnHover={true}
-            draggable={false}
-            theme={'dark'}
-          />
-          <Controls />
-          <SearchResults />
-        </div>
+        <ToastContainer
+          position={'bottom-right'}
+          autoClose={4444}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={false}
+          theme={'dark'}
+        />
+        <Controls />
+        <SearchResults />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
