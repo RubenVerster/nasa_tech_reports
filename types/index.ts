@@ -14,3 +14,10 @@ export enum EReplaceType {
   single = 'single',
   all = 'all',
 }
+
+export interface SearchState {
+  genesisResults: ISearchResult[];
+  replaceResults: ISearchResult[];
+  loading: boolean;
+  firstSearch: boolean;
+}

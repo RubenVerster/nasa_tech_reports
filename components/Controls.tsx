@@ -28,29 +28,11 @@ const Controls = () => {
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.length === 0) {
-      toast.error('Please enter a search term', {
-        position: 'bottom-right',
-        autoClose: 4444,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
+      toast.error('Please enter a search term');
       return;
     }
     if (searchTerm.length <= 3) {
-      toast.error('Search term must be longer than 3 letters', {
-        position: 'bottom-right',
-        autoClose: 4444,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
+      toast.error('Search term must be longer than 3 letters');
       return;
     }
     fetchData();

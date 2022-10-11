@@ -24,16 +24,13 @@ const Home: NextPage = () => {
 
         <div>
           <ToastContainer
-            position='top-right'
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme='light'
+            position={'bottom-right'}
+            autoClose={4444}
+            hideProgressBar={true}
+            closeOnClick={true}
+            pauseOnHover={true}
+            draggable={false}
+            theme={'dark'}
           />
           <Controls />
           <SearchResults />
