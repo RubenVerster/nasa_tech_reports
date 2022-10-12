@@ -11,9 +11,11 @@ const SearchResults: React.FC = () => {
   const firstSearch = useSelector((state: RootState) => state.search.firstSearch);
 
   return (
-    <div>
+    <div className='mt-8 h-full'>
       {loading ? (
-        <MoonLoader color={'#fff'} loading={loading} size={42} />
+        <div className='flex justify-center items-center'>
+          <MoonLoader color={'#0000ff'} loading={loading} size={222} />
+        </div>
       ) : (
         <div>
           {replaceResults?.length > 0

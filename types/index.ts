@@ -20,4 +20,5 @@ export interface SearchState {
   replaceResults: ISearchResult[];
   loading: boolean;
   firstSearch: boolean;
+  searchTerm: string;
 }

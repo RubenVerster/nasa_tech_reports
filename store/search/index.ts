@@ -7,6 +7,7 @@ const initialState: SearchState = {
   replaceResults: [],
   loading: false,
   firstSearch: true,
+  searchTerm: '',
 };
 
 export const searchSlice = createSlice({
@@ -25,10 +26,14 @@ export const searchSlice = createSlice({
     setFirstSearch: (state, action: PayloadAction<boolean>) => {
       state.firstSearch = action.payload;
     },
+    setSearchTerm: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setGenesisResults, setReplaceResults, setLoading, setFirstSearch } = searchSlice.actions;
+export const { setGenesisResults, setReplaceResults, setLoading, setFirstSearch, setSearchTerm } =
+  searchSlice.actions;
 
 export default searchSlice.reducer;

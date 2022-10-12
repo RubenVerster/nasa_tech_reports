@@ -4,11 +4,12 @@ import Head from 'next/head';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 
-import Controls from '../components/Controls';
+import Search from '../components/Search';
 import Footer from '../components/Footer';
 import SearchResults from '../components/SearchResults';
 
 import 'react-toastify/dist/ReactToastify.css';
+import Controls from '../components/Controls';
 
 const Home: NextPage = () => {
   return (
@@ -20,7 +21,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <h1>Wiki-Replace</h1>
+        <h1 className='text-white text-center text-3xl my-4'>Wiki-Replace</h1>
 
         <ToastContainer
           position={'bottom-right'}
@@ -31,7 +32,10 @@ const Home: NextPage = () => {
           draggable={false}
           theme={'dark'}
         />
-        <Controls />
+        <div className='flex justify-between w-full px-4'>
+          <Search />
+          <Controls />
+        </div>
         <SearchResults />
       </main>
       {/* <Footer /> */}
