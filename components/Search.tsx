@@ -19,7 +19,6 @@ const Search = () => {
   const dispatch = useDispatch();
 
   const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
-
   const loading = useSelector((state: RootState) => state.search.loading);
 
   const URL = `https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&format=json&srsearch=${searchTerm}&srlimit=10`;
@@ -35,7 +34,7 @@ const Search = () => {
   };
 
   useEffect(() => {
-    if (searchTerm.length <= 1) {
+    if (searchTerm.length < 1) {
       return;
     }
     debouncedSearch();
@@ -46,6 +45,11 @@ const Search = () => {
   }, 333);
 
   const debouncedSetSerchTerm = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length < 1) {
+      dispatch(setGenesisResults([]));
+      dispatch(setReplaceResults([]));
+      dispatch(setFirstSearch(true));
+    }
     dispatch(setSearchTerm(e.target.value));
   }, 333);
 

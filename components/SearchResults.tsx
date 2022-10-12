@@ -11,13 +11,13 @@ const SearchResults: React.FC = () => {
   const firstSearch = useSelector((state: RootState) => state.search.firstSearch);
 
   return (
-    <div className='mt-8 h-full'>
+    <div className='mt-8 h-full w-full p-4'>
       {loading ? (
         <div className='flex justify-center items-center'>
           <MoonLoader color={'#0000ff'} loading={loading} size={222} />
         </div>
       ) : (
-        <div>
+        <div className='flex flex-wrap justify-center overflow-y-scroll' style={{ maxHeight: '70vh' }}>
           {replaceResults?.length > 0
             ? replaceResults?.map((item: ISearchResult) => <ResultItem key={item.pageid} {...item} />)
             : !firstSearch && (

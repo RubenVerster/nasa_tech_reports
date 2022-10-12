@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { VscReplace, VscReplaceAll, VscTools } from 'react-icons/vsc';
 import { RootState } from '../store';
 import { useSelector, useDispatch } from 'react-redux';
-import { setGenesisResults, setReplaceResults, setLoading, setFirstSearch } from '../store/search';
+import { setReplaceResults } from '../store/search';
 
 import { EReplaceType } from '../types/index';
 import { toast } from 'react-toastify';
@@ -25,6 +25,10 @@ const Controls = () => {
   //reafctor into utility file
   const replaceText = (replaceType: EReplaceType) => {
     if (genesisResults.length === 0) return;
+    if (searchTerm.length < 1) {
+      toast.error('At least search for the first letter of the alphabet... 🙄');
+      return;
+    }
     if (replaceSearchTerm.length < 1) {
       toast.error(
         'At least try to replace the first letter of the alphabet with the last letter of the alphabet... 🙄'
