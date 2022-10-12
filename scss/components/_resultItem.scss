@@ -1,0 +1,19 @@
+.result_item {
+  box-shadow: 0px 6px 12px #333;
+  animation: shadow 7s infinite;
+  background-color: rgba($color: blue, $alpha: 0.1);
+  word-break: break-all;
+}
+
+//animate shadow
+@keyframes shadow {
+  0% {
+    box-shadow: 0px 4px 12px #333;
+  }
+  50% {
+    box-shadow: 0px 4px 18px rgb(55, 55, 163);
+  }
+  100% {
+    box-shadow: 0px 4px 12px #333;
+  }
+}
