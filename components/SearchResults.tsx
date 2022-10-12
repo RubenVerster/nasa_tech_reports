@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import { MoonLoader } from 'react-spinners';
 import Image from 'next/image';
+import ResultItem from './ResultItem';
 
 const SearchResults: React.FC = () => {
   const replaceResults = useSelector((state: RootState) => state.search.replaceResults);
@@ -16,12 +17,7 @@ const SearchResults: React.FC = () => {
       ) : (
         <div>
           {replaceResults?.length > 0
-            ? replaceResults?.map((item: ISearchResult) => (
-                <div className='result' key={item.pageid}>
-                  <h3>{item.title}</h3>
-                  <div dangerouslySetInnerHTML={{ __html: item.snippet }}></div>
-                </div>
-              ))
+            ? replaceResults?.map((item: ISearchResult) => <ResultItem key={item.pageid} {...item} />)
             : !firstSearch && (
                 <div className='no-results'>
                   <h3>No results were found :(</h3>

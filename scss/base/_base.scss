@@ -32,16 +32,21 @@ a {
   text-shadow: 0 0 5px white;
   text-decoration: underline;
   animation: color-change 3s infinite;
+  font-weight: bold;
+  font-size: large;
 }
 
 @keyframes color-change {
   0% {
     color: white;
+    text-shadow: 0 0 5px green;
   }
   50% {
-    color: pink;
+    color: green;
+    text-shadow: 0 0 5px blue;
   }
   100% {
     color: white;
+    text-shadow: 0 0 5px green;
   }
 }
