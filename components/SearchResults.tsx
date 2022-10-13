@@ -21,8 +21,8 @@ const SearchResults: React.FC = () => {
           {replaceResults?.length > 0
             ? replaceResults?.map((item: ISearchResult) => <ResultItem key={item.pageid} {...item} />)
             : !firstSearch && (
-                <div className='no-results'>
-                  <h3>No results were found :(</h3>
+                <div className='no-results flex flex-col items-center justify-center'>
+                  <h3 className='text-3xl mb-3 text-red-700'>No results were found :(</h3>
                   <Image src='/resources/img/no_results.gif' alt='no results' width={300} height={300} />
                 </div>
               )}
