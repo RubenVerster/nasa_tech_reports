@@ -1,9 +1,9 @@
 import { Drawer } from '@mui/material';
 import React, { useState } from 'react';
-import { VscDiscard, VscReplace, VscReplaceAll, VscTools } from 'react-icons/vsc';
+import { VscClearAll, VscDiscard, VscReplace, VscReplaceAll, VscTools } from 'react-icons/vsc';
 import { RootState } from '../store';
 import { useSelector, useDispatch } from 'react-redux';
-import { setReplaceResults } from '../store/search';
+import { setFirstSearch, setReplaceResults } from '../store/search';
 
 import { EReplaceType } from '../types/index';
 import { toast } from 'react-toastify';
@@ -77,6 +77,12 @@ const Controls = () => {
     dispatch(setReplaceResults(genesisResults));
   };
 
+  const clearResults = () => {
+    if (genesisResults.length === 0) return;
+    dispatch(setReplaceResults([]));
+    dispatch(setFirstSearch(true));
+  };
+
   return (
     <div>
       <Drawer anchor={'right'} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
@@ -111,6 +117,13 @@ const Controls = () => {
                 >
                   <VscDiscard size={22} />
                   Reset
+                </button>
+                <button
+                  className='text-black p-1 py-2 flex justify-center items-center mt-1 mb-2 border-2 rounded-md border-black hover:bg-blue-400 hover:text-white ease-in-out duration-200'
+                  onClick={() => clearResults()}
+                >
+                  <VscClearAll size={22} />
+                  Clear Results
                 </button>
               </div>
             </div>
