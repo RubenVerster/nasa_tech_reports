@@ -93,9 +93,9 @@ const Search = () => {
   };
 
   return (
-    <div className='flex h-14 w-full'>
+    <div className='flex h-14 w-full mb-2'>
       <input
-        className=' w-2/5 max-w-md border-blue-200 border-2 rounded-md p-2 border-r-0 rounded-r-none'
+        className='w-full max-w-md border-blue-200 border-2 rounded-md p-2 border-r-0 rounded-r-none'
         placeholder='Enter a search term'
         type='text'
         onChange={(e) => {

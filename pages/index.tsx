@@ -32,7 +32,7 @@ const Home: NextPage = () => {
           draggable={false}
           theme={'dark'}
         />
-        <div className='flex justify-between w-full px-4'>
+        <div className='md:flex px-4'>
           <Search />
           <Controls />
         </div>
