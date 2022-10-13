@@ -5,6 +5,16 @@
   word-break: break-all;
 }
 
+.searchmatch {
+  color: white;
+  padding: 0 2px;
+  text-shadow: 0 0 5px white;
+  text-decoration: underline;
+  animation: color-change 3s infinite;
+  font-weight: bold;
+  font-size: large;
+}
+
 //animate shadow
 @keyframes shadow {
   0% {

@@ -1,6 +1,6 @@
 import { Drawer } from '@mui/material';
 import React, { useState } from 'react';
-import { VscReplace, VscReplaceAll, VscTools } from 'react-icons/vsc';
+import { VscDiscard, VscReplace, VscReplaceAll, VscTools } from 'react-icons/vsc';
 import { RootState } from '../store';
 import { useSelector, useDispatch } from 'react-redux';
 import { setReplaceResults } from '../store/search';
@@ -70,6 +70,13 @@ const Controls = () => {
     }
   };
 
+  const resetReplace = () => {
+    if (searchResults.length === 0) return;
+    if (searchResults === genesisResults) return;
+
+    dispatch(setReplaceResults(genesisResults));
+  };
+
   return (
     <div>
       <Drawer anchor={'right'} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
@@ -97,6 +104,13 @@ const Controls = () => {
                 >
                   <VscReplaceAll size={22} />
                   Replace All
+                </button>
+                <button
+                  className='text-black p-1 py-2 flex justify-center items-center mt-1 mb-2 border-2 rounded-md border-black hover:bg-blue-400 hover:text-white ease-in-out duration-200'
+                  onClick={() => resetReplace()}
+                >
+                  <VscDiscard size={22} />
+                  Reset
                 </button>
               </div>
             </div>
