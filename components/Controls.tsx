@@ -83,6 +83,33 @@ const Controls = () => {
     dispatch(setFirstSearch(true));
   };
 
+  const BUTTON_MAPS = [
+    {
+      icon: <VscReplace size={22} />,
+      text: 'Replace',
+      key: 'replace',
+      onClick: () => replaceText(EReplaceType.single),
+    },
+    {
+      icon: <VscReplaceAll size={22} />,
+      text: 'Replace All',
+      key: 'replace-all',
+      onClick: () => replaceText(EReplaceType.all),
+    },
+    {
+      icon: <VscDiscard size={22} />,
+      text: 'Reset',
+      key: 'reset',
+      onClick: () => resetReplace(),
+    },
+    {
+      icon: <VscClearAll size={22} />,
+      text: 'Clear Results',
+      key: 'clear',
+      onClick: () => clearResults(),
+    },
+  ];
+
   return (
     <div>
       <Drawer anchor={'right'} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
@@ -97,34 +124,19 @@ const Controls = () => {
                   value={replaceSearchTerm}
                   onChange={(e) => handleReplaceInputChange(e)}
                 ></input>
-                <button
-                  className='text-black p-1 py-2 flex justify-center items-center mt-1 mb-2 border-2 rounded-md border-black hover:bg-blue-400 hover:text-white ease-in-out duration-200'
-                  onClick={() => replaceText(EReplaceType.single)}
-                >
-                  <VscReplace size={22} />
-                  Replace First
-                </button>
-                <button
-                  className='text-black p-1 py-2 flex justify-center items-center mt-1 mb-2 border-2 rounded-md border-black hover:bg-blue-400 hover:text-white ease-in-out duration-200'
-                  onClick={() => replaceText(EReplaceType.all)}
-                >
-                  <VscReplaceAll size={22} />
-                  Replace All
-                </button>
-                <button
-                  className='text-black p-1 py-2 flex justify-center items-center mt-1 mb-2 border-2 rounded-md border-black hover:bg-blue-400 hover:text-white ease-in-out duration-200'
-                  onClick={() => resetReplace()}
-                >
-                  <VscDiscard size={22} />
-                  Reset
-                </button>
-                <button
-                  className='text-black p-1 py-2 flex justify-center items-center mt-1 mb-2 border-2 rounded-md border-black hover:bg-blue-400 hover:text-white ease-in-out duration-200'
-                  onClick={() => clearResults()}
-                >
-                  <VscClearAll size={22} />
-                  Clear Results
-                </button>
+
+                {BUTTON_MAPS.map((button) => (
+                  <button
+                    key={button.key}
+                    className='text-black p-1 py-2 flex justify-center items-center mt-1 mb-2 border-2 rounded-md border-black hover:bg-blue-400 hover:text-white ease-in-out duration-200'
+                    onClick={button.onClick}
+                  >
+                    <div className='flex items-center'>
+                      {button.icon}
+                      <p className='ml-2'>{button.text}</p>
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
             <button
