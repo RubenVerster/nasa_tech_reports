@@ -26,7 +26,7 @@ const Footer = () => {
 
   return (
     <footer className='absolute bottom-0 p-2 flex justify-between w-full text-white'>
-      <div>
+      <div className='flex items-end'>
         <button className='text-white hover:text-blue-700 ease-in-out duration-200' onClick={handleOpen}>
           <VscInfo size={44} />
         </button>
