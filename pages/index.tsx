@@ -38,7 +38,7 @@ const Home: NextPage = () => {
         </div>
         <SearchResults />
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
