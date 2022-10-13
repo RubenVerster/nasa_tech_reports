@@ -9,21 +9,6 @@ const Footer = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    border: '2px solid #fff',
-    borderRadius: '4px',
-    boxShadow: 24,
-    width: '80%',
-    maxWidth: '500px',
-    color: 'white',
-    p: 1,
-  };
-
   return (
     <footer className='absolute bottom-0 p-2 flex justify-between w-full text-white'>
       <div className='flex items-end'>
@@ -36,7 +21,7 @@ const Footer = () => {
           aria-labelledby='modal-modal-title'
           aria-describedby='modal-modal-description'
         >
-          <Box sx={style}>
+          <div className='modal absolute max-w-lg w-4/5 text-white border-2 rounded-md'>
             <div className='border-b-2 border-blue-400 mb-4 p-3'>
               <h2 className='text-2xl mb-1 text-blue-700'>Search A Phrase</h2>
               <p className='w-4/5'>
@@ -56,7 +41,7 @@ const Footer = () => {
 
               <Image src='/resources/info/info_tools.jpeg' alt='Tools Info' width={142} height={99} />
             </div>
-          </Box>
+          </div>
         </Modal>
       </div>
       <div className='flex flex-col justify-center'>
