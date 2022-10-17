@@ -14,16 +14,3 @@
   font-weight: bold;
   font-size: large;
 }
-
-//animate shadow
-@keyframes shadow {
-  0% {
-    box-shadow: 0px 4px 12px #333;
-  }
-  50% {
-    box-shadow: 0px 4px 18px rgb(55, 55, 163);
-  }
-  100% {
-    box-shadow: 0px 4px 12px #333;
-  }
-}
