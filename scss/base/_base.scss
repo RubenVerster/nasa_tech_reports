@@ -41,18 +41,3 @@ a {
     background: black;
   }
 }
-
-@keyframes color-change {
-  0% {
-    color: white;
-    text-shadow: 0 0 5px green;
-  }
-  50% {
-    color: green;
-    text-shadow: 0 0 5px blue;
-  }
-  100% {
-    color: white;
-    text-shadow: 0 0 5px green;
-  }
-}
